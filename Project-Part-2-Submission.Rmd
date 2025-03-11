@@ -1,0 +1,92 @@
+---
+title: "Project Part 2"
+author: "Drashti Patel (7964120)"
+date: "11/17/2024"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+fifa <- read.csv("FIFA.csv")
+```
+
+Here's a description of my data set.
+# This project delves into the performance metrics of top FIFA players from the 2024 season. The dataset captures a wide range of statistics for these athletes, including their overall performance ratings, potential ratings, and the number of hits—a measure of their popularity and engagement. By analyzing this data, we can gain a deeper understanding of the factors that influence a player’s performance, which is a critical focus for clubs, managers, and analysts looking to evaluate talent and make informed decisions.The response variable for this analysis is Overall, which represents a player’s current performance rating. This rating is an essential indicator of a player’s skills and abilities at a given moment, offering insight into their value and impact in professional soccer.The explanatory variables are Hits and Potential. Hits reflects the attention a player receives, which might boost their performance through confidence or support. Potential indicates a player’s future growth prospects and likely impacts their overall rating by showing how much faith teams have in their development.
+
+Here's the dataset of FIFA of first 10 obsevations from dataset in a tabular form
+```{r}
+Name = c("Lionel Messi", "Cristiano Ronaldo", "Neymar Jr", "Virgil van Dijk", "Jan Oblak", 
+           "Kevin De Bruyne", "Robert Lewandowski", "Eden Hazard", "Alisson", "Mohamed Salah")
+Hits = c(299, 276, 186, 127, 47, 119, 89, 66, 53, 94)
+Potential = c(94, 93, 92, 92, 93, 91, 91, 91, 91, 90)
+Overall = c(94, 93, 92, 91, 91, 91, 91, 91, 90, 90)
+fifa_data <- data.frame(Name,Hits,Potential,Overall)
+fifa_data
+knitr::kable(fifa_data,"pipe",col.names = c("Name","Hits","Potential","Overall"), align =c("l","c","c"))
+```
+
+The citaion for the dataset is:
+Mishra, A. (2024). FIFA 2021 complete player data [Data set]. Kaggle. 
+https://www.kaggle.com/datasets/aayushmishra1512/fifa-2021-complete-player-data
+
+
+Here’s an explanation of each variable in your dataset:
+# Overall: This variable represents a player’s current performance rating on a scale from 1 to 100. It shows how skilled and valuable the player is in professional soccer during the 2024 season.
+# Hits: Hits refer to the amount of attention or interest a player attracts, measured by the number of interactions they receive.A higher number of hits suggests that the player is gaining more popularity or catching the attention of fans and analysts alike.
+# Potential: Potential represents the highest level of performance a player is projected to achieve during their career. This rating is given on a scale of 1 to 100 and offers a glimpse into the player’s future growth, highlighting their untapped abilities and what they are expected to accomplish as they develop in their career.
+
+The scatterplot for the FIFA dataset:
+
+```{r}
+# Scatterplot for Hits vs. Overall
+plot(fifa$Hits, fifa$Overall, 
+     main = "Scatterplot of Hits vs. Overall", 
+     xlab = "Hits", 
+     ylab = "Overall", 
+     pch = 19, 
+     col = "blue")
+# Adding a linear regression line
+abline(lm(Overall ~ Hits, data = fifa), col = "blue")
+
+# Scatterplot for Potential vs. Overall
+plot(fifa$Potential, fifa$Overall, 
+     main = "Scatterplot of Potential vs. Overall", 
+     xlab = "Potential", 
+     ylab = "Overall", 
+     pch = 19, 
+     col = "red")
+# Adding a linear regression line 
+abline(lm(Overall ~ Potential, data = fifa), col = "red")
+```
+
+```{r}
+fifa1 <- lm(Overall ~ Hits, data = fifa)
+summary(fifa1)
+
+# R^2 = 0.4385, Adj_r^2 = 0.4268
+
+fifa2 <- lm(Overall ~ Potential, data = fifa)
+summary(fifa2)
+
+# R^2 = 0.5808, Adj_r^2 = 0.572
+```
+For $Y\sim X1$, $r^2=0.4385$ and $R^2_{adj}=0.4268$
+For $Y\sim X2$ $r^2=0.5808$ and $R^2_{adj}=0.572$
+
+
+
+
+Summary for the combined model
+```{r}
+# Combined model R^2
+fifa_combined <- lm(Overall ~ Hits + Potential, data = fifa)
+summary(fifa_combined)
+# Adjusted R^2 = 0.6103
+```
+For $Y\sim X1 + X2$ $R^2_{adj}=0.6103$
+
+Summary for the above calculations:
+The scatterplot of Hits vs. Overall shows a moderate positive correlation (R^2 =0.4385), suggesting that higher engagement leads to better performance. The Potential vs. Overall plot shows a stronger correlation (R^2 =0.5808), indicating that a player's potential is a more significant predictor of performance. Combining both variables improves the model's explanatory power, with an adjusted R^2,Adj_r^2 =0.6103, providing a more accurate view of overall performance.

@@ -1,0 +1,47 @@
+---
+title: "Project Part 1"
+author: "Drashti Patel (7964120)"
+date: "11/01/2024"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+fifa <- read.csv("FIFA.csv")
+```
+
+Here's a description of my data set.
+# This is a dataset of performance statistics for elite FIFA players during the 2024 season, including metrics such as ratings(overall), potential,age, and Hits.
+
+Here's the URL where I found my dataset.
+# https://www.kaggle.com/datasets/aayushmishra1512/fifa-2021-complete-player-data
+
+My response variable is Overall.
+
+My two explanatory variables are Hits and Potential.
+
+```{r}
+fifa1 <- lm(Overall ~ Hits, data = fifa)
+summary(fifa1)
+
+# R^2 = 0.4385, Adj_r^2 = 0.4268
+
+fifa2 <- lm(Overall ~ Potential, data = fifa)
+summary(fifa2)
+
+# R^2 = 0.5808, Adj_r^2 = 0.572
+```
+
+For $Y\sim X1$, $r^2=0.4385$ and $R^2_{adj}=0.4268$
+For $Y\sim X2$ $r^2=0.5808$ and $R^2_{adj}=0.572$
+
+```{r}
+fifa_combined <- lm(Overall ~ Potential+ Hits, data = fifa)
+summary(fifa_combined)
+
+# Adjusted R^2 = 0.6103
+```
+For $Y\sim X1 + X2$ $R^2_{adj}=0.6103$
