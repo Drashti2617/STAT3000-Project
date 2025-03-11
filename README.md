@@ -1,4 +1,5 @@
-#FIFA Player Performance Analysis
+# Retail Sales Analysis SQL Project
+
 Project Overview
 Project Title: FIFA Player Performance Analysis
 Level: Intermediate
